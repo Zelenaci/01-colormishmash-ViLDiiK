@@ -36,9 +36,9 @@ class Application(tk.Tk):
         self.buttonExit.pack()
 
     def change(self, event):
-        r=self.scaleR.get()
-        g=self.scaleG.get()
-        b=self.scaleB.get()
+        r = self.scaleR.get()
+        g = self.scaleG.get()
+        b = self.scaleB.get()
         self.canvasMain.config(background=f"#{r:02x}{g:02x}{b:02x}")
 
     def quit(self, event=None):
