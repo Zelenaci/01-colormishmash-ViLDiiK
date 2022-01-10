@@ -13,6 +13,7 @@ class Application(tk.Tk):
         self.title(self.name)
 
         self.bind("<Escape>", self.quit)
+        self.protocol("WM_DELETE_WINDOW", self.quit)
 
         self.frameR = Frame(self)
         self.frameR.pack()
@@ -74,6 +75,13 @@ class Application(tk.Tk):
                 canvas.grid(row=row,column=column)
                 self.canvasMem.append(canvas)
 
+        self.load()
+
+    def load(self):
+        with open("paleta.txt", "r") as f:
+            colorMain = f.readline().strip()
+            self.canvasMain.config(background=colorMain)
+
     def change(self, var=None, index=None, mode=None):
         r = self.scaleR.get()
         g = self.scaleG.get()
@@ -91,7 +99,14 @@ class Application(tk.Tk):
             self.config(cursor="")
             event.widget.config(background=self.color)
 
+    def save(self):
+        with open("paleta.txt", "w") as f:
+            f.write(self.canvasMain.cget("background")+"\n")
+            for canvas in self.canvasMem:
+                f.write(canvas.cget("background")+"\n")
+
     def quit(self, event=None):
+        self.save()
         super().quit()
 
 app = Application()
